@@ -9,5 +9,7 @@ class Track {
     static belongsTo = [room: Room, user: User, category: TrackCategory]
 
     static constraints = {
+        name blank: false, nullable: false
+        filename blank: false, nullable: false, matches: "^[\\w\\-. ñáéíóúü]+\$"
     }
 }

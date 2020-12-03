@@ -10,5 +10,7 @@ class TrackCategory {
     static belongsTo = [project: Project]
 
     static constraints = {
+        name blank: false, nullable: false
+        status blank: false, inList: ["submitted", "redo"]
     }
 }

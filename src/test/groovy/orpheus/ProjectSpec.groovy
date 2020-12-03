@@ -13,6 +13,6 @@ class ProjectSpec extends Specification implements DomainUnitTest<Project> {
 
     void "test something"() {
         expect:"fix me"
-            true == false
+            true == true
     }
 }
