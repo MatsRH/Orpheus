@@ -36,36 +36,78 @@ class TrackSpec extends Specification implements DomainUnitTest<Track> {
         !domain.validate(['name'])
     }
 
-    void 'test submitted status is valid'() {
+    void 'test valid filename is valid'() {
         when:
-        domain.status = "submitted"
+        domain.filename = "file_name.test"
 
         then:
-        domain.validate(['status'])
+        domain.validate(['filename'])
     }
 
-    void 'test redo status is valid'() {
+    void 'test filename with @ is invalid'() {
         when:
-        domain.status = "redo"
+        domain.filename = "file_@name.test"
 
         then:
-        domain.validate(['status'])
+        !domain.validate(['filename'])
     }
 
-    void 'test status cannot be null'() {
+    void 'test filename with ! is invalid'() {
         when:
-        domain.status = null
+        domain.filename = "file_!name.test"
 
         then:
-        !domain.validate(['status'])
-        domain.errors['status'].code == 'nullable'
+        !domain.validate(['filename'])
     }
 
-    void 'test status cannot be blank'() {
+    void 'test filename with # is invalid'() {
         when:
-        domain.status = ''
+        domain.filename = "file_#name.test"
 
         then:
-        !domain.validate(['status'])
+        !domain.validate(['filename'])
     }
+
+    void 'test filename with $ is invalid'() {
+        when:
+        domain.filename = "file_\$name.test"
+
+        then:
+        !domain.validate(['filename'])
+    }
+
+    void 'test filename with % is invalid'() {
+        when:
+        domain.filename = "file_%name.test"
+
+        then:
+        !domain.validate(['filename'])
+    }
+
+    void 'test filename with * is invalid'() {
+        when:
+        domain.filename = "file_*name.test"
+
+        then:
+        !domain.validate(['filename'])
+    }
+
+    void 'test filename cannot be null'() {
+        when:
+        domain.filename = null
+
+        then:
+        !domain.validate(['filename'])
+        domain.errors['filename'].code == 'nullable'
+    }
+
+    void 'test filename cannot be blank'() {
+        when:
+        domain.filename = ''
+
+        then:
+        !domain.validate(['filename'])
+    }
+
+
 }

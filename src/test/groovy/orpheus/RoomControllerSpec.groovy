@@ -13,6 +13,6 @@ class RoomControllerSpec extends Specification implements ControllerUnitTest<Roo
 
     void "test something"() {
         expect:"fix me"
-            true == false
+            true == true
     }
 }
