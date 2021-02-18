@@ -3,70 +3,70 @@ package orpheus
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-class RoomController {
+class RoleController {
 
-    RoomService roomService
+    RoleService roleService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond roomService.list(params), model:[roomCount: roomService.count()]
+        respond roleService.list(params), model:[roleCount: roleService.count()]
     }
 
     def show(Long id) {
-        respond roomService.get(id)
+        respond roleService.get(id)
     }
 
     def create() {
-        respond new Room(params)
+        respond new Role(params)
     }
 
-    def save(Room room) {
-        if (room == null) {
+    def save(Role role) {
+        if (role == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            roleService.save(role)
         } catch (ValidationException e) {
-            respond room.errors, view:'create'
+            respond role.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.created.message', args: [message(code: 'role.label', default: 'Role'), role.id])
+                redirect role
             }
-            '*' { respond room, [status: CREATED] }
+            '*' { respond role, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond roomService.get(id)
+        respond roleService.get(id)
     }
 
-    def update(Room room) {
-        if (room == null) {
+    def update(Role role) {
+        if (role == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            roleService.save(role)
         } catch (ValidationException e) {
-            respond room.errors, view:'edit'
+            respond role.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'role.label', default: 'Role'), role.id])
+                redirect role
             }
-            '*'{ respond room, [status: OK] }
+            '*'{ respond role, [status: OK] }
         }
     }
 
@@ -76,11 +76,11 @@ class RoomController {
             return
         }
 
-        roomService.delete(id)
+        roleService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'room.label', default: 'Room'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'role.label', default: 'Role'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -90,7 +90,7 @@ class RoomController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'room.label', default: 'Room'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'role.label', default: 'Role'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

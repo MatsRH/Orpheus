@@ -1,26 +1,2 @@
-|Resolving Dependencies. Please wait...
-
-CONFIGURE SUCCESSFUL in 30s
-|Starting interactive mode...
-|Enter a command name to run. Use TAB for completion:
-grails> 
-
-assemble                     bug-report                   
-clean                        compile                      
-console                      create-command               
-create-controller            create-domain-class          
-create-functional-test       create-integration-test      
-create-interceptor           create-scaffold-controller   
-create-script                create-service               
-create-taglib                create-unit-test             
-dependency-report            generate-all                 
-generate-async-controller    generate-controller          
-generate-views               gradle                       
-help                         install-templates            
-list-plugins                 open                         
-plugin-info                  run-app                      
-run-command                  run-script                   
-schema-export                shell                        
-stats                        stop-app                     
-test-app                     url-mappings-report          
-grails> 
+Error |
+Error occurred running Grails CLI: No profile found for name [web]. (Use --stacktrace to see the full trace)

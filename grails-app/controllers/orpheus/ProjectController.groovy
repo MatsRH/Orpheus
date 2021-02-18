@@ -3,70 +3,70 @@ package orpheus
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-class RoomController {
+class ProjectController {
 
-    RoomService roomService
+    ProjectService projectService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond roomService.list(params), model:[roomCount: roomService.count()]
+        respond projectService.list(params), model:[projectCount: projectService.count()]
     }
 
     def show(Long id) {
-        respond roomService.get(id)
+        respond projectService.get(id)
     }
 
     def create() {
-        respond new Room(params)
+        respond new Project(params)
     }
 
-    def save(Room room) {
-        if (room == null) {
+    def save(Project project) {
+        if (project == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            projectService.save(project)
         } catch (ValidationException e) {
-            respond room.errors, view:'create'
+            respond project.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.created.message', args: [message(code: 'project.label', default: 'Project'), project.id])
+                redirect project
             }
-            '*' { respond room, [status: CREATED] }
+            '*' { respond project, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond roomService.get(id)
+        respond projectService.get(id)
     }
 
-    def update(Room room) {
-        if (room == null) {
+    def update(Project project) {
+        if (project == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            projectService.save(project)
         } catch (ValidationException e) {
-            respond room.errors, view:'edit'
+            respond project.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'project.label', default: 'Project'), project.id])
+                redirect project
             }
-            '*'{ respond room, [status: OK] }
+            '*'{ respond project, [status: OK] }
         }
     }
 
@@ -76,11 +76,11 @@ class RoomController {
             return
         }
 
-        roomService.delete(id)
+        projectService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'room.label', default: 'Room'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'project.label', default: 'Project'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -90,7 +90,7 @@ class RoomController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'room.label', default: 'Room'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'project.label', default: 'Project'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

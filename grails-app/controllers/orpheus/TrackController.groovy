@@ -3,70 +3,70 @@ package orpheus
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-class RoomController {
+class TrackController {
 
-    RoomService roomService
+    TrackService trackService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond roomService.list(params), model:[roomCount: roomService.count()]
+        respond trackService.list(params), model:[trackCount: trackService.count()]
     }
 
     def show(Long id) {
-        respond roomService.get(id)
+        respond trackService.get(id)
     }
 
     def create() {
-        respond new Room(params)
+        respond new Track(params)
     }
 
-    def save(Room room) {
-        if (room == null) {
+    def save(Track track) {
+        if (track == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            trackService.save(track)
         } catch (ValidationException e) {
-            respond room.errors, view:'create'
+            respond track.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.created.message', args: [message(code: 'track.label', default: 'Track'), track.id])
+                redirect track
             }
-            '*' { respond room, [status: CREATED] }
+            '*' { respond track, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond roomService.get(id)
+        respond trackService.get(id)
     }
 
-    def update(Room room) {
-        if (room == null) {
+    def update(Track track) {
+        if (track == null) {
             notFound()
             return
         }
 
         try {
-            roomService.save(room)
+            trackService.save(track)
         } catch (ValidationException e) {
-            respond room.errors, view:'edit'
+            respond track.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'room.label', default: 'Room'), room.id])
-                redirect room
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'track.label', default: 'Track'), track.id])
+                redirect track
             }
-            '*'{ respond room, [status: OK] }
+            '*'{ respond track, [status: OK] }
         }
     }
 
@@ -76,11 +76,11 @@ class RoomController {
             return
         }
 
-        roomService.delete(id)
+        trackService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'room.label', default: 'Room'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'track.label', default: 'Track'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -90,7 +90,7 @@ class RoomController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'room.label', default: 'Room'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'track.label', default: 'Track'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
