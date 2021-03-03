@@ -3,6 +3,7 @@ function restore(){
   $(".one").addClass("disabled");
   Fr.voice.stop();
 }
+
 $(document).ready(function(){
   $(document).on("click", "#record:not(.disabled)", function(){
     elem = $(this);
